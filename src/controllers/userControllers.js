@@ -93,7 +93,7 @@ const getUsers = (req, res) => {
 
   const deleteUser = (req, res) => {
     const id = parseInt(req.params.id);
-  
+    if(id) {
     database
       .query("delete from users where id = ?", [id])
       .then(([result]) => {
@@ -103,10 +103,14 @@ const getUsers = (req, res) => {
           res.sendStatus(204);
         }
       })
+    }
+    else {
+      database
       .catch((err) => {
         console.error(err);
-        res.sendStatus(500);
+        res.sendStatus(404);
       });
+    }
   };
 
   module.exports = {

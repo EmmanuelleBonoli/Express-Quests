@@ -70,7 +70,7 @@ describe("POST /api/movies", () => {
     const response = await request(app)
       .post("/api/movies")
       .send(movieWithMissingProps);
-      
+
       expect(response.status).toEqual(422);
   });
 });
@@ -159,4 +159,30 @@ describe("PUT /api/movies/:id", () => {
     const response = await request(app).put("/api/movies/0").send(newMovie);
     expect(response.status).toEqual(404);
   });
+});
+
+describe("DELETTE /api/movies/:id", () => {
+  it("should remove movie", async () => {
+    const newMovie = {
+      title: "Avatar",
+      director: "James Cameron",
+      year: "2010",
+      color: "1",
+      duration: 162,
+    };
+    const [result2] = await database.query(
+      "INSERT INTO movies(title, director, year, color, duration) VALUES (?, ?, ?, ?, ?)",
+      [newMovie.title, newMovie.director, newMovie.year, newMovie.color, newMovie.duration]
+    );
+    const id = result2.insertId;
+    const response = await request(app)
+      .delete(`/api/movies/${id}`)
+      .send("Delete done");
+    expect(response.status).toEqual(204);
+  });
+  it("should fail because no ID valid", async () => {
+    const response = await request(app)
+    .delete(`/api/movies/5000`)
+    expect(response.status).toEqual(404);
+  })
 });
