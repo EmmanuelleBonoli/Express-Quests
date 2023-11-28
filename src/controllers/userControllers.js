@@ -59,7 +59,7 @@ const getUsers = (req, res) => {
       database
       .catch((err) => {
         console.error(err);
-        res.sendStatus(500);
+        res.sendStatus(422);
       });
     }
     
@@ -86,7 +86,7 @@ const getUsers = (req, res) => {
       database
       .catch((err) => {
         console.error(err);
-        res.sendStatus(500);
+        res.sendStatus(422);
       });
     }
    

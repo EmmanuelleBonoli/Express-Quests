@@ -84,7 +84,7 @@ const postMovie = (req, res) => {
     database
     .catch((err) => {
       console.error(err);
-      res.status(500).send("movieWithMissingProps");
+      res.status(422).send("movieWithMissingProps");
     });
   }
  };
@@ -110,7 +110,7 @@ const postMovie = (req, res) => {
     database
     .catch((err) => {
       console.error(err);
-      res.sendStatus(500);
+      res.sendStatus(422);
     });
   }
  
