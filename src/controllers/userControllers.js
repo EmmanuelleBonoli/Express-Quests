@@ -69,7 +69,8 @@ const getUsers = (req, res) => {
     const id = parseInt(req.params.id);
     const { firstname, lastname, email, city, language } = req.body;
   
-    database
+    if(firstname&& lastname&& email&& city&& language){
+      database
       .query(
         "update users set firstname = ?, lastname = ?, email = ?, city = ?, language = ? where id = ?",
         [firstname, lastname, email, city, language, id]
@@ -81,10 +82,15 @@ const getUsers = (req, res) => {
           res.sendStatus(204);
         }
       })
+    } else{
+      database
       .catch((err) => {
         console.error(err);
         res.sendStatus(500);
       });
+    }
+   
+      
   };
 
   module.exports = {
